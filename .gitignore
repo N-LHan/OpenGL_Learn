@@ -1,0 +1,5 @@
+.vscode/
+build/
+Dependencies/
+res/
+glad.c
