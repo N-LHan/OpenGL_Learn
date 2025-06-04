@@ -10,26 +10,9 @@
 #include <sstream>
 #include <math.h>
 
-
-// #define ASSERT(x) if (!(x)) __debugbreak();
-// #define GLCall(x) GLClearError();\ 
-//     x;\ 
-//     ASSERT(GLLogCall(#x, __FILE__, __LINE__))
-
-
-// static void GLClearError(){
-//     while(!glGetError()!= GL_NO_ERROR);
-// }
-
-// static bool GLLogCall(const char* Function,const char *file, int line){
-//     while(GLenum error =  glGetError())
-//     {
-//         std::cout << "OpenGl Error" << error << " " << Function << " "
-//          << file  << " " << line << std::endl;
-//         return false;
-//     }
-//     return true;
-// }
+#include "Renderer.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 static std::pair<std::string,std::string> ParseShader(const std::string& filepath)
 {
@@ -106,9 +89,7 @@ int main() {
     std::cout << sizeof(float) << std::endl;
     glfwInit();
     
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
 
     
     // 创建窗口和OpenGL上下文
@@ -117,6 +98,7 @@ int main() {
     if(glewInit()!=GLEW_OK){
         std::cout << "Error" <<std::endl;
     }
+
 
     glfwSwapInterval(2);
     
@@ -135,17 +117,12 @@ int main() {
     glGenVertexArrays(1,&vao);
     glBindVertexArray(vao);
     
-    unsigned int buffer=1;
-    glGenBuffers(1,&buffer);
-    glBindBuffer(GL_ARRAY_BUFFER,buffer);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(positions),positions,GL_STATIC_DRAW);
+    VertexBuffer vb(positions,2*4*sizeof(float));
     glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
+    
     glEnableVertexAttribArray(0);
-
-    unsigned int ibo;
-    glGenBuffers(1,&ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(indices),indices,GL_STATIC_DRAW);
+    IndexBuffer ib(indices,6);
+    
 
 
 
@@ -156,8 +133,6 @@ int main() {
 
     unsigned int location = glGetUniformLocation(shader,"u_Color");
 
-    float c_x = 0.09f;
-    float increment = 0.05f;
     float time=0.0f;
     float r = 0.0f;
     // 渲染循环
@@ -168,14 +143,7 @@ int main() {
         float g =(cos(time)+1.0f)/2.0f;
         glClear(GL_COLOR_BUFFER_BIT);
         glUniform4f (location,r,g,0.6f,1.0f);
-        
-        if (c_x <0.0f ){
-            increment = 0.05f;
-        }else if(c_x >0.9f){
-            increment = -0.05f;
-        }
-        c_x+=increment;
-        glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr);
+        GLCall(glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr));
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
