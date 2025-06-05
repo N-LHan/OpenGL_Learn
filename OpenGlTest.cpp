@@ -10,7 +10,8 @@
 #include <sstream>
 #include <math.h>
 
-#include "Renderer.h"
+#include "VertexArray.h"
+#include "Renderer.h"                               
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 
@@ -113,14 +114,10 @@ int main() {
         1,3,0
     };
 
-    unsigned int vao;
-    glGenVertexArrays(1,&vao);
-    glBindVertexArray(vao);
+    
     
     VertexBuffer vb(positions,2*4*sizeof(float));
-    glVertexAttribPointer(0,2,GL_FLOAT,GL_FALSE,sizeof(float)*2,0);
     
-    glEnableVertexAttribArray(0);
     IndexBuffer ib(indices,6);
     
 
