@@ -1,5 +1,14 @@
 #include "VertexArray.h"
 #include  "Renderer.h"
+void VertexArray::Bind()
+{
+    glBindVertexArray(m_RendererID);
+}
+
+void VertexArray::UnBind()
+{
+    glBindVertexArray(0);
+}
 VertexArray::VertexArray()
 {
     glGenVertexArrays(1,&m_RendererID);
@@ -12,7 +21,7 @@ VertexArray::~VertexArray()
 
 void VertexArray::AddBuffer(const VertexBuffer &vb, const VertexBufferLayout &layout)
 {
-    Bing();
+    Bind();
     vb.Bind();
     const auto& elements = layout.GetElements();
     unsigned  int offset = 0;
@@ -27,12 +36,4 @@ void VertexArray::AddBuffer(const VertexBuffer &vb, const VertexBufferLayout &la
     
 }
 
-void VertexArray::Bind()
-{
-    glBindVertexArray(m_RendererID);
-}
 
-void VertexArray::UnBind()
-{
-    glBindVertexArray(0);
-}

@@ -115,9 +115,11 @@ int main() {
     };
 
     
-    
+    VertexArray va;
     VertexBuffer vb(positions,2*4*sizeof(float));
-    
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    va.AddBuffer(vb,layout);
     IndexBuffer ib(indices,6);
     
 
