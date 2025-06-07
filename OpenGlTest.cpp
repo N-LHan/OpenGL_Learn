@@ -112,13 +112,13 @@ int main() {
     unsigned int indices[] ={
         0,1,2,
         1,3,0
-    };
+    }; 
 
     
     VertexArray va;
     VertexBuffer vb(positions,2*4*sizeof(float));
     VertexBufferLayout layout;
-    layout.Push<float>(3);
+    layout.Push<float>(2);
     va.AddBuffer(vb,layout);
     IndexBuffer ib(indices,6);
     
