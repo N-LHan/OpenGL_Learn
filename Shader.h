@@ -1,5 +1,10 @@
 #pragma onca
- #include <string>
+#ifndef _SHADER_H
+#define _SHADER_H
+
+
+
+#include <string>
 
 
 struct ShaderKind
@@ -9,7 +14,6 @@ struct ShaderKind
 };
 
  class Shader
- 
  {
  private:
     std::string m_FilePath;
@@ -19,8 +23,8 @@ struct ShaderKind
    Shader(const std::string &filepath);
    ~Shader();
    
-   void Bind();
-   void Unbind();
+   void Bind() const;
+   void Unbind() const;
 
    //Set uniforms
    void SetUniform4(const std::string& name,float v0,float v1,float v2,float v3);
@@ -31,5 +35,5 @@ private:
     int Createshader(const std::string&vertexShader, const std::string& fragmentShader);
  };
  
- 
+ #endif
  

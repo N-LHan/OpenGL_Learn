@@ -57,8 +57,8 @@ int main() {
     IndexBuffer ib(indices,6);
     
     Shader program ("res/shader.shader");
-    program.Bind();
     
+    Renderer renderer;
 
     float time=0.0f;
     float r = 0.0f;
@@ -70,7 +70,7 @@ int main() {
         float g =(cos(time)+1.0f)/2.0f;
         glClear(GL_COLOR_BUFFER_BIT);
         program.SetUniform4("u_Color",r,g,0.6f,1.0f);
-        GLCall(glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,nullptr));
+        renderer.Draw(va,ib,program);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }

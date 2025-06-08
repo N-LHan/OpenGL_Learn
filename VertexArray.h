@@ -10,7 +10,7 @@ class VertexArray
         ~VertexArray();
 
         void AddBuffer(const VertexBuffer &vb,const VertexBufferLayout &layout);
-        void Bind ();
-        void UnBind ();
+        void Bind ()const;
+        void UnBind () const;
        
 };
